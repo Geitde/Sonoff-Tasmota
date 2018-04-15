@@ -453,7 +453,7 @@ void ShowPage(String &page, bool auth)
   }
 
   page.replace(F("{ha"), my_module.name);
-  page.replace(F("{h}"), Settings.friendlyname[0]);
+  page.replace(F("{h}"), Settings.hostname);
   if (HTTP_MANAGER == webserver_state) {
     if (WifiConfigCounter()) {
       page.replace(F("<body>"), F("<body onload='u()'>"));
@@ -992,7 +992,7 @@ void HandleBackupConfiguration()
   WebServer->setContentLength(sizeof(buffer));
 
   char attachment[100];
-  snprintf_P(attachment, sizeof(attachment), PSTR("attachment; filename=Config_%s_%s.dmp"), Settings.friendlyname[0], my_version);
+  snprintf_P(attachment, sizeof(attachment), PSTR("attachment; filename=Config_%s_%s.dmp"), Settings.hostname, my_version);
   WebServer->sendHeader(F("Content-Disposition"), attachment);
   WebServer->send(200, FPSTR(HDR_CTYPE_STREAM), "");
   memcpy(buffer, &Settings, sizeof(buffer));
